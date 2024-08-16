@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
 
-const token = 'YOUR_TELEGRAM_BOT_TOKEN';
+const token = '7131194235:AAE-W7l_x-FmAtsUQoirB4Qryru5L_u5jpI';
 const bot = new TelegramBot(token, { polling: true });
 
 bot.onText(/\/start/, (msg) => {
