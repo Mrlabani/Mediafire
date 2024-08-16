@@ -4,14 +4,13 @@ const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
 
-const token = '7131194235:AAE-W7l_x-FmAtsUQoirB4Qryru5L_u5jpI';
-const bot = new TelegramBot(token, { polling: true });
+// Replace with your Telegram bot token
+const token = process.env.TELEGRAM_BOT_TOKEN;
+const bot = new TelegramBot(token, { polling: false });
 
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-  bot.sendMessage(chatId, 'Send me a Mediafire link and I will download the file for you.');
-});
+bot.setWebHook(process.env.VERCEL_URL + '/api/webhook');
 
+// Handle incoming updates from Telegram
 bot.on('message', async (msg) => {
   const chatId = msg.chat.id;
   const text = msg.text;
@@ -22,6 +21,7 @@ bot.on('message', async (msg) => {
       const fileId = extractMediafireFileId(text);
       if (fileId) {
         const downloadUrl = `https://www.mediafire.com/file/${fileId}/file`;
+
         const response = await axios({
           url: downloadUrl,
           method: 'GET',
@@ -79,7 +79,7 @@ function extractMediafireFileId(url) {
   }
 }
 
-module.exports = async (req, res) => {
-  res.status(200).send('Bot is running');
+module.exports = (req, res) => {
+  bot.processUpdate(req.body);
+  res.status(200).send('Update received');
 };
-                           
