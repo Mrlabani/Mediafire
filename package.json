@@ -1,9 +1,9 @@
 {
-  "name": "my-bot",
+  "name": "my-telegram-bot",
   "version": "1.0.0",
-  "main": "api/bot.js",
+  "main": "api/webhook.js",
   "scripts": {
-    "start": "node api/bot.js"
+    "start": "node api/webhook.js"
   },
   "dependencies": {
     "node-telegram-bot-api": "^0.56.0",
